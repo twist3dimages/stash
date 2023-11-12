@@ -31,7 +31,7 @@ jobs:
 
     - name: Prepare Dockerfile
       run: |
-        rm -f docker/ci/x86_64/Dockerfile
+        rm docker/ci/x86_64/Dockerfile
         mv docker/build/x86_64/Dockerfile-Cuda docker/ci/x86_64/Dockerfile
 
     - name: Build Docker-CUDA Image
