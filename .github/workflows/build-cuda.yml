@@ -28,8 +28,15 @@ jobs:
         git clone https://github.com/stashapp/stash.git upstream-stash
         # Use additional commands to compare and check for changes
 
+
+    - name: Prepare Dockerfile
+      run: |
+        rm -f docker/ci/x86_64/Dockerfile
+        mv docker/build/x86_64/Dockerfile-Cuda docker/ci/x86_64/Dockerfile
+
     - name: Build Docker-CUDA Image
-      run: docker build -t ghcr.io/twist3dimages/stash/stash-cuda:latest -f  stash/docker/build/x86_64/Dockerfile-CUDA .
+      run: docker build -t ghcr.io/twist3dimages/stash/stash-cuda:latest -f docker/ci/x86_64/Dockerfile .
+
 
     - name: Log in to GitHub Container Registry
       uses: docker/login-action@v1
