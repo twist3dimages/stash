@@ -25,18 +25,17 @@ jobs:
 
     - name: Pull Latest from stashapp/stash
       run: |
-        git clone https://github.com/stashapp/stash.git upstream-stash
-        # Use additional commands to compare and check for changes
-
+        rm -rf *  # Caution: This will delete all files in the current directory!
+        git clone --depth=1 https://github.com/stashapp/stash.git .
 
     - name: Prepare Dockerfile
       run: |
         ls
-        rm /upstream-stash/docker/ci/x86_64/Dockerfile
-        mv /upstream-stash/docker/build/x86_64/Dockerfile-Cuda /upstream-stash/docker/ci/x86_64/Dockerfile
+        rm docker/ci/x86_64/Dockerfile
+        mv docker/build/x86_64/Dockerfile-Cuda docker/ci/x86_64/Dockerfile
 
     - name: Build Docker-CUDA Image
-      run: docker build -t ghcr.io/twist3dimages/stash/stash-cuda:latest -f /upstream-stash/docker/ci/x86_64/Dockerfile .
+      run: docker build -t ghcr.io/twist3dimages/stash/stash-cuda:latest -f docker/ci/x86_64/Dockerfile .
 
 
     - name: Log in to GitHub Container Registry
