@@ -25,8 +25,11 @@ jobs:
 
     - name: Pull Latest from stashapp/stash
       run: |
-        rm -rf *  # Caution: This will delete all files in the current directory!
-        git clone --depth=1 https://github.com/stashapp/stash.git .
+        mkdir temp_dir
+        git clone --depth=1 https://github.com/stashapp/stash.git temp_dir
+        rm -rf *  # Removes all files in the current directory
+        mv temp_dir/* temp_dir/.[!.]* .  # Moves all files, including hidden files, from temp_dir to the current directory
+        rm -rf temp_dir  # Removes the temporary directory
 
     - name: Prepare Dockerfile
       run: |
