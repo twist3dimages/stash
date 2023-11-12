@@ -1,0 +1,42 @@
+name: Build
+
+on:
+  push: # Triggers on every push to any branch
+  pull_request:
+  release:
+    types: [ published ]
+  workflow_dispatch: # Allows manual triggering
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  COMPILER_IMAGE: stashapp/compiler:7
+
+jobs:
+  check-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout twist3dimages/stash
+      uses: actions/checkout@v2
+      with:
+        repository: twist3dimages/stash
+
+    - name: Pull Latest from stashapp/stash
+      run: |
+        git clone https://github.com/stashapp/stash.git upstream-stash
+        # Use additional commands to compare and check for changes
+
+    - name: Build Docker-CUDA Image
+      run: docker build -t ghcr.io/twist3dimages/stash/stash-cuda:latest -f  stash/docker/build/x86_64/Dockerfile-CUDA .
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Push the Docker-CUDA image
+      run: docker push ghcr.io/twist3dimages/stash/stash-cuda:latest
