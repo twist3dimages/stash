@@ -26,16 +26,6 @@ jobs:
         ref: develop  # Replace 'main' with the branch or tag you want to checkout
 
 
-    - name: Pull Latest from stashapp/stash
-      run: |
-        mkdir temp_dir
-        git clone --depth=1 https://github.com/stashapp/stash.git temp_dir
-        find temp_dir -mindepth 1 -exec mv {} . \; # Moves all files from temp_dir to the current directory
-        rm -rf temp_dir  # Removes the temporary directory
-      shell: /usr/bin/bash -e {0}
-      env:
-        COMPILER_IMAGE: stashapp/compiler:7
-
 
     - name: Prepare Dockerfile
       run: |
