@@ -31,6 +31,7 @@ jobs:
 
     - name: Prepare Dockerfile
       run: |
+        ls
         rm docker/ci/x86_64/Dockerfile
         mv docker/build/x86_64/Dockerfile-Cuda docker/ci/x86_64/Dockerfile
 
