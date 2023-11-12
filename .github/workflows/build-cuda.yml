@@ -1,4 +1,4 @@
-name: Build
+name: Build CUDA
 
 on:
   push: # Triggers on every push to any branch
