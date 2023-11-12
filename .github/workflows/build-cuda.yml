@@ -18,10 +18,13 @@ jobs:
   check-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout twist3dimages/stash
+    - name: Checkout stashapp/stash
       uses: actions/checkout@v2
       with:
-        repository: twist3dimages/stash
+        repository: stashapp/stash
+        # You can specify a branch, tag, or commit as needed
+        ref: develop  # Replace 'main' with the branch or tag you want to checkout
+
 
     - name: Pull Latest from stashapp/stash
       run: |
