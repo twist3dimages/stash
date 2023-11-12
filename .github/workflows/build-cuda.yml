@@ -30,11 +30,11 @@ jobs:
     - name: Prepare Dockerfile
       run: |
         ls
-        rm docker/ci/x86_64/Dockerfile
-        mv docker/build/x86_64/Dockerfile-Cuda docker/ci/x86_64/Dockerfile
+        rm /docker/ci/x86_64/Dockerfile
+        mv /docker/build/x86_64/Dockerfile-Cuda /docker/ci/x86_64/Dockerfile
 
     - name: Build Docker-CUDA Image
-      run: docker build -t ghcr.io/twist3dimages/stash/stash-cuda:latest -f docker/ci/x86_64/Dockerfile .
+      run: docker build -t ghcr.io/twist3dimages/stash/stash-cuda:latest -f /docker/ci/x86_64/Dockerfile .
 
 
     - name: Log in to GitHub Container Registry
